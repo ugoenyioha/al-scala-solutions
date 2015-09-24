@@ -1,0 +1,43 @@
+What makes a function pure? Give examples
+
+A function f with input type A and output type B
+(written in Scala as a single type A => B) is a computation that
+relates every value a of type A to exactly one value b of type B
+such that B is determined solely by the value of A. Any changing
+state of an internal or external processes is irrelevant to computing
+the result f(a). For example a function intToString having type Int => String
+will take every integer to a corresponding string. Furthermore as a function
+it will do nothing else.
+
+
+What is referential transparency? What are its benefits?
+
+An expression, e is referentially transparent if, for all programs p,
+all occurrences of e in p can be replaced by the result of evaluating e
+without affecting the meaning of p. A function f(x) is pure if the expression f(x)
+is referentially transparent for all referentially transparent x.
+
+From a programmer perspective, referential transparency makes is easier to
+reason about the behavior an expression as it can be simplified by replacing
+with its result. Compilers also benefit from referential transparency because
+it simplifies their ability to perform static analysis on the code as well
+as code optimizations.
+
+
+How does a functional program deal with side-effects?
+
+Functional programming eschews side effects because it makes it easier to reason
+about the behavior and correctness of the program due to referential transparency.
+A program without side effects is trivially parallelizable because there is no state
+to protect with locks.
+
+In practice however, most applications have side effects that cannot be avoided
+(e.g. I/O operations). What functional programs attempt to do then is
+to identify these side effects, limit them and prevent them from being littered
+throughout the code base.
+
+Functional programs deal with side effects by making state updates explicit.
+In this case, state is not updated in the side effect, but rather the functional
+program will return a new state alongside the value that was computed. This approach
+converts the stateful sections of the code into "pure" functions that can be reasoned about
+with referential transparency semantics.
